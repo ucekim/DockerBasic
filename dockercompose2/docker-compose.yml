@@ -1,0 +1,25 @@
+version: "3.7"
+
+services:
+    database:
+        image: mysql:5.7
+        environment:
+            MYSQL_ROOT_PASSWORD: R1234r
+            MYSQL_DATABASE: todo_db
+            MYSQL_USER: josepf
+            MYSQL_PASSWORD: josepf_1
+        networks:
+            - josepfnet
+    myapp:
+        build: .
+        restart: always
+        depends_on:
+            - database
+        ports:
+            - "80:80"
+        networks:
+            - josepfnet
+
+networks:
+    josepfnet:
+        driver: bridge
