@@ -1,0 +1,32 @@
+version: "3.7"
+services:
+  
+  database:
+    image: mysql:5.7
+    container_name: database
+    restart: always
+    volumes:
+      - database-data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=phonebook
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=josepf-1
+    networks:
+      - josepfnet
+
+  app:
+    build: .
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - database
+    networks:
+      - josepfnet
+volumes:
+  database-data:
+
+networks:
+  josepfnet:
+    driver: bridge
